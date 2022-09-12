@@ -18,7 +18,8 @@ int hashTable::insert(const std::string &key, void *pv)
     // check if we should rehash 
     if (filled >= capacity/2)
     {
-        rehash();
+        if (!rehash())
+            return REHASH_FAIL;
     }
 
     int index = hash(key);
@@ -34,11 +35,11 @@ int hashTable::insert(const std::string &key, void *pv)
             {
                 // if it is deleted, undelete it
                 data[i].isDeleted = false;
-                return 0;
+                return SUCCESS;
             }
             
-            // if it's not deleted, return 1
-            return 1;
+            // if it's not deleted, return KEY_EXISTS
+            return KEY_EXISTS;
         }
 
         // if the key is not in the location we are looking in, find the next open spot
@@ -53,6 +54,8 @@ int hashTable::insert(const std::string &key, void *pv)
     data[i].isDeleted = false;
     data[i].pv = pv;
     filled++;
+
+    return SUCCESS;
 }
 
 bool hashTable::contains(const std::string &key)
@@ -150,7 +153,7 @@ bool hashTable::rehash()
 
         return true;
     }
-    catch(std::bad_alloc)
+    catch(std::bad_alloc&)
     {
         std::cerr << "Error: unable to allocate memory for new hash table" << std::endl;
     }

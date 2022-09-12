@@ -14,9 +14,10 @@ class hashTable {
   // Insert the specified key into the hash table.
   // If an optional pointer is provided,
   // associate that pointer with the key.
-  // Returns 0 on success,
-  // 1 if key already exists in hash table,
-  // 2 if rehash fails.
+  // Returns entryType::SUCCESS if the key is inserted.
+  // Returns entryType::KEY_EXISTS if the key is already in the hash table.
+  // Returns entryType::REHASH_FAIL if the key is not inserted because the rehash fails.
+  enum entryType {SUCCESS, KEY_EXISTS, REHASH_FAIL};
   int insert(const std::string &key, void *pv = nullptr);
 
   // Check if the specified key is in the hash table.
