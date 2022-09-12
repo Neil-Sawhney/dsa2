@@ -1,6 +1,6 @@
 #pragma once
 
-#include <hash.h>
+#include "../include/hash.h"
 // returns true if the passed in letter is a word seperator
 bool isWordSep(char letter);
 
