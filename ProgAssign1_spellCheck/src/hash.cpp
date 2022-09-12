@@ -152,8 +152,9 @@ bool hashTable::rehash()
     }
     catch(std::bad_alloc)
     {
-        return false;
+        std::cerr << "Error: unable to allocate memory for new hash table" << std::endl;
     }
+    return false;
     
 }
 
