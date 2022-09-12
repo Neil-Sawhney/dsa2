@@ -21,7 +21,7 @@ wordType chkWord(std::string word)
         return EMPTY;
 
     bool containsNumbers = false;
-    for (int i = 0; i < word.length(); i++)
+    for (unsigned int i = 0; i < word.length(); i++)
     {
         char currChar = word[i];
 
@@ -68,7 +68,7 @@ void loadDictionary(hashTable &dictionary, std::string &filename)
         if (chkWord(word) == VALID || chkWord(word) == CONTAINS_NUMBERS)
         {
             // convert word to lowercase
-            for (int i = 0; i < word.length(); i++)
+            for (unsigned int i = 0; i < word.length(); i++)
             {
                 word[i] = tolower(word[i]);
             }
@@ -110,7 +110,7 @@ void spellcheck(hashTable &dictionary, std::string &spellcheckFile, std::string 
         }
 
         // loop through every letter in the line
-        for (int i = 0; i < line.length(); i++)
+        for (unsigned int i = 0; i < line.length(); i++)
         {
             // convert letter to lowercase
             line[i] = tolower(line[i]);
