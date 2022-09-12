@@ -129,22 +129,32 @@ int hashTable::findPos(const std::string &key)
 
 bool hashTable::rehash()
 {
-    int oldCapacity = capacity;
-    std::vector<hashItem> oldData = data;
-
-    capacity = getPrime(capacity);
-    data.resize(capacity);
-    filled = 0;
-
-    // insert all the old data into the new hash table
-    for (int i = 0; i < oldCapacity; i++)
+    try
     {
-        if (oldData[i].isOccupied && !oldData[i].isDeleted)
+        int oldCapacity = capacity;
+        std::vector<hashItem> oldData = data;
+
+        capacity = getPrime(capacity);
+        data.resize(capacity);
+        filled = 0;
+
+        // insert all the old data into the new hash table
+        for (int i = 0; i < oldCapacity; i++)
         {
-            // insert the key into the new hash table
-            insert(oldData[i].key);
+            if (oldData[i].isOccupied && !oldData[i].isDeleted)
+            {
+                // insert the key into the new hash table
+                insert(oldData[i].key);
+            }
         }
+
+        return true;
     }
+    catch(std::bad_alloc)
+    {
+        return false;
+    }
+    
 }
 
 unsigned int hashTable::getPrime(int size)

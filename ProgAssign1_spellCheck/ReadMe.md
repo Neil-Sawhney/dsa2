@@ -1,1 +1,0 @@
-The executable gets compiled into ./output

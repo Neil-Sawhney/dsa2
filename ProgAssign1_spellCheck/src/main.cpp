@@ -3,6 +3,7 @@
 
 int main()
 {
+
     // prompt the user for the dictionary file
     std::string dictionaryFile;
     std::cout << "Enter the dictionary file: ";
