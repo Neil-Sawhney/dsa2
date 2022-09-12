@@ -14,6 +14,13 @@ hashTable::hashTable(int size)
 
 int hashTable::insert(const std::string &key, void *pv)
 {
+
+    // check if we should rehash 
+    if (filled >= capacity/2)
+    {
+        rehash();
+    }
+
     int index = hash(key);
     int i = index;
     int j = 0;
