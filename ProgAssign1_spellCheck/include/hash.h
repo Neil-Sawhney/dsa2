@@ -1,6 +1,4 @@
 #pragma once
-#ifndef _HASH_H
-#define _HASH_H
 
 #include <vector>
 #include <string>
@@ -82,5 +80,3 @@ class hashTable {
   // Uses a precomputed sequence of selected prime numbers.
   static unsigned int getPrime(int size);
 };
-
-#endif //_HASH_H
