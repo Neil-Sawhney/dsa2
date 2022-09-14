@@ -139,7 +139,12 @@ bool hashTable::rehash()
 
         capacity = getPrime(capacity);
         data.resize(capacity);
-        filled = 0;
+
+        // reinitialize the new hash table
+        for (int i = 0; i < capacity; i++)
+        {
+            data[i].isOccupied = false;
+        }
 
         // insert all the old data into the new hash table
         for (int i = 0; i < oldCapacity; i++)

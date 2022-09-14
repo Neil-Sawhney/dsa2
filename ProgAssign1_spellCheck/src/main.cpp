@@ -15,7 +15,11 @@ int main()
 
     std::string outputFile;
     std::cout << "Enter the output file: ";
-    std::cin >> outputFile;
+    std::cin >> outputFile; 
+
+/*     std::string dictionaryFile = "./tests/sample_input/1.5millionWords.txt";
+    std::string spellcheckFile = "./tests/sample_input/lyrics.txt";
+    std::string outputFile = "./output.txt"; */
 
     hashTable dictionary(50000);
     loadDictionary(dictionary, dictionaryFile);
