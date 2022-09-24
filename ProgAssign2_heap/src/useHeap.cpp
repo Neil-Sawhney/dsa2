@@ -34,7 +34,7 @@ void getInteger(string message, int &ref)
   }
 }
 
-int main()
+/* int main()
 {
   int capacity = 0;
   int option;
@@ -128,4 +128,4 @@ int main()
 
   cerr << "Error, we should never get here!\n";
   exit (1);
-}
+} */
