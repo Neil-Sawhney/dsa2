@@ -34,13 +34,9 @@ void getInteger(string message, int &ref)
   }
 }
 
-//TODO: REMOVE THIS LINE
 #include "../tests/tests.cpp" //TODO: REMOVE THIS LINE
 int main()
 {
-  test1(); //TODO: REMOVE THIS LINE
-  return 0; //TODO: REMOVE THIS LINE
-  //TODO: Remove this line
   int capacity = 0;
   int option;
   string stringTmp;

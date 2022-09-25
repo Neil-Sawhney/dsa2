@@ -126,16 +126,12 @@ int heap::setKey(const std::string &id, int key)
    // find the node pointer in the hash table
    node *node_ptr = static_cast<node *>(mapping.getPointer(id));
 
-    // percolate up or down as necessary
-    if (key < data[getPos(node_ptr)].key){
-        percolateUp(getPos(node_ptr));
-    }
-    else{
-        percolateDown(getPos(node_ptr));
-    }
-
    // set the node's key to the new key
    node_ptr->key = key;
+
+   // percolate up or down as necessary
+   percolateUp(getPos(node_ptr));
+   percolateDown(getPos(node_ptr));
 
     return SUCCESS;
 }
