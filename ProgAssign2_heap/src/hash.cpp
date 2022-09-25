@@ -58,6 +58,39 @@ int hashTable::insert(const std::string &key, void *pv)
     return SUCCESS;
 }
 
+bool hashTable::remove(const std::string &key)
+{
+    int index = hash(key);
+    int i = index;
+    int j = 0;
+    while (data[i].isOccupied)
+    {
+        // if the key is in the hash table
+        if (data[i].key == key)
+        {
+            // check to make sure it's not deleted
+            if (data[i].isDeleted)
+            {
+                // if it is deleted, return false
+                return false;
+            }
+            
+            // if it's not deleted, delete it
+            data[i].isDeleted = true;
+            filled--;
+            return true;
+        }
+
+        // if the key is not in the location we are looking in, find the next open spot
+        // using linear probing where p(x) = x
+        i = (index + j) % capacity;
+        j++;
+    }
+
+    // if the key is not in the hash table, return false
+    return false;
+}
+
 bool hashTable::contains(const std::string &key)
 {
     if (findPos(key) == -1)

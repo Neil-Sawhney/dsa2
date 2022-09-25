@@ -4,7 +4,7 @@
 
 std::vector<bool> TEST;
 
-int main() {
+void test() {
     hashTable ht(50'000);
     int goat = 12;
 
