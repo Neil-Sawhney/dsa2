@@ -47,28 +47,39 @@ void heap::percolateDown(int posCur)
     if (posCur * 2 > m_filled)
         return;
 
-    // compute the positions of the children
-    int leftChild = posCur * 2;
-    int rightChild = posCur * 2 + 1;
+    int minChildPos;
+    // if we have a right child, find the smaller child
+    if (posCur * 2 + 1 <=m_filled)
+    {
+        // compute the positions of the children
+        int leftChildPos = posCur * 2;
+        int rightChildPos = posCur * 2 + 1;
 
-    // find the smaller of the two children
-    int minChild = std::min(data[leftChild].key, data[rightChild].key);
+        // find the smaller of the two children
+        minChildPos = data[leftChildPos].key < data[rightChildPos].key ? leftChildPos : rightChildPos;
+    }
+    else
+    {
+        // if we only have a left child, it is the smaller child
+        minChildPos = posCur * 2;
+    }
+
 
     // if the smaller child is smaller than the current node,
     // swap with the smaller child
-    if (minChild < data[posCur].key)
+    if (data[minChildPos].key < data[posCur].key)
     {
         // swap the nodes
         node temp = data[posCur];
-        data[posCur] = data[minChild];
-        data[minChild] = temp;
+        data[posCur] = data[minChildPos];
+        data[minChildPos] = temp;
 
         // swap the pointers in the hash table
         mapping.setPointer(data[posCur].id, &data[posCur]);
-        mapping.setPointer(data[minChild].id, &data[minChild]);
+        mapping.setPointer(data[minChildPos].id, &data[minChildPos]);
 
         // recursively percolate down
-        percolateDown(minChild);
+        percolateDown(minChildPos);
     }
 
     // otherwise, we are done
@@ -133,6 +144,8 @@ int heap::deleteMin(std::string *pId, int *pKey, void *ppData)
 {
     if (m_filled == 0)
         return HEAP_EMPTY;
+
+    //TODO: okay dont actually swap haha just place the last one in the first one
 
     // swap the root with the last node
     node temp = data[1];

@@ -72,7 +72,6 @@ public:
     //
     int setKey(const std::string &id, int key);
 
-    // deleteMin - return the data associated with the smallest key
     //             and delete that node from the binary heap
     //int
     // If pId is supplied (i.e., it is not nullptr), write to that address

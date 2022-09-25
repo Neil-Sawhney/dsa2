@@ -16,6 +16,7 @@
         "ostream": "cpp",
         "string_view": "cpp",
         "type_traits": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "cstdio": "cpp"
     }
 }
