@@ -1,4 +1,5 @@
 #include <heap.h>
+#include <iostream>
 
 // leave plenty of room in the hash table to avoid rehashing
 heap::heap(int capacity) : mapping(2*capacity)
@@ -109,8 +110,8 @@ int heap::insert(const std::string &id, int key, void *pv)
     data[++m_filled] = newNode;
 
     // Insert the new node into the hash table.
-    mapping.insert(id, &data[m_filled]);
-
+    //TODO: Fix this fuckery
+    int FUCK =  mapping.insert(id, &data[m_filled]);
     // Percolate up.
     percolateUp(m_filled);
 

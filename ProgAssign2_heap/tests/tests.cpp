@@ -1,3 +1,30 @@
+#include <string>
+#include <heap.h>
+#include <iostream>
+
+void randomThing(heap &myHeap)
+{
+    int num = rand() % 4;
+    int key = rand() % 5 + 1;
+    std::string id = "id" + std::to_string(key);
+    switch(num)
+    {
+        case 0:
+            std::cout << "\ninsert:\nkey: " << key << "\nid: " << id << "\nreturn: " << myHeap.insert(id, key) << "\n" << std::endl;;
+            break;
+        case 1:
+            std::cout << "\nsetKey:\nkey: " << key << "\nid: " << id << "\nreturn: " << myHeap.setKey(id, key) << "\n" << std::endl;;
+            break;
+        case 2:
+            std::cout << "\nremove:\nkey: " << key << "\nid: " << id << "\nreturn: " << myHeap.remove(id, &key) << "\n" << std::endl;;
+            break;
+        case 3:
+            std::cout << "\ndeleteMin:\nkey: " << key << "\nid: " << id << "\nreturn: " << myHeap.deleteMin(&id, &key) << "\n" << std::endl;;
+            break;
+    }
+    
+}
+
 void test1()
 {
     heap myHeap(100);
@@ -83,4 +110,11 @@ void test1()
         throw "test failed";
     if (myHeap.deleteMin(&id, &key) != 1)
         throw "test failed"; 
+
+    // perform random tests until something fails
+    while (1)
+    {
+        randomThing(myHeap);
+    }
+    
 }

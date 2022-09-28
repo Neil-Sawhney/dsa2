@@ -34,7 +34,10 @@ int hashTable::insert(const std::string &key, void *pv)
             if (data[i].isDeleted)
             {
                 // if it is deleted, undelete it
+                //TODO: this may be wrong
                 data[i].isDeleted = false;
+                data[i].pv = pv;
+                filled++;
                 return SUCCESS;
             }
             
