@@ -1,2 +1,2 @@
 cat ./tests/checkSable_input.txt | ./output/main > output/checkSable.out
-diff output/checkSable.out tests/expectedOutput_ugly.txt
+diff output/checkSable.out tests/checkSable_expectedOutput.txt

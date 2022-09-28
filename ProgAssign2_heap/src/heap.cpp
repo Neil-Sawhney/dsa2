@@ -110,8 +110,7 @@ int heap::insert(const std::string &id, int key, void *pv)
     data[++m_filled] = newNode;
 
     // Insert the new node into the hash table.
-    //TODO: Fix this fuckery
-    int FUCK =  mapping.insert(id, &data[m_filled]);
+    mapping.insert(id, &data[m_filled]);
     // Percolate up.
     percolateUp(m_filled);
 
