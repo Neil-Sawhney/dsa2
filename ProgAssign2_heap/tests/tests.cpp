@@ -2,11 +2,13 @@
 #include <heap.h>
 #include <iostream>
 
+int debug_identifier = 0;
 void randomThing(heap &myHeap)
 {
     int num = rand() % 4;
-    int key = rand() % 5 + 1;
+    int key = rand() % 20 - 10;
     std::string id = "id" + std::to_string(key);
+
     switch(num)
     {
         case 0:
@@ -22,6 +24,7 @@ void randomThing(heap &myHeap)
             std::cout << "\ndeleteMin:\nkey: " << key << "\nid: " << id << "\nreturn: " << myHeap.deleteMin(&id, &key) << "\n" << std::endl;;
             break;
     }
+    std::cout << debug_identifier++ << std::endl;
     
 }
 
@@ -110,6 +113,8 @@ void test1()
         throw "test failed";
     if (myHeap.deleteMin(&id, &key) != 1)
         throw "test failed"; 
+
+    std::cout << "success 1" << std::endl;
 
     // perform random tests until something fails
     while (1)
