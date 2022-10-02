@@ -143,7 +143,7 @@ void test3()
             break;
         }
         myHeap.debugStuff();
-        std::cout << "debug: " << debug++ << std::endl;
+        std::cout << "\ndebug: " << debug++ << std::endl;
 
         std::cout << "---------------------\n\n" << std::endl;
     }

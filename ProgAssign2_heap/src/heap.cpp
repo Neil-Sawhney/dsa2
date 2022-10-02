@@ -1,21 +1,68 @@
 #include <heap.h>
 #include <iostream>
 #include <vector> //TODO: remove this
+#include <algorithm> //TODO: remove this
+#include <cmath> //TODO: remove this
 
 //TODO: REMOVE THIS, FOR DEBUGGING ONLY
 void heap::debugStuff()
 {
     std::cout << "Heap: " << std::endl;
-    //loop through the heap
+
+    //print the heap so that it looks like a binary tree
+    int level = 0;
+    int levelSize = 1;
+    int levelCount = 0;
+
+    int numLevels = std::log2(m_filled) + 1;
     for (int i = 1; i <= m_filled; i++)
     {
-        std::cout << data[i].id << ": " << data[i].key << std::endl;
 
         if(!mapping.contains(data[i].id))
         {
+            // the data is in the heap, but it's not in the hash table
             throw "THIS IS BREAKING HERE";
         }
+        // print appropriate beginning tabs where the first level has the most tabs and the last level has none
+        if(levelCount == 0)
+        {
+            for (int j = 0; j < std::pow(2,numLevels - (level+1)); j++)
+            {
+                std::cout << "\t";
+            }
+        }
+        std::cout << data[i].id << ": " << data[i].key;
+        // print appropriate intermediate tabs
+        if (levelCount < levelSize - 1)
+        {
+            for (int j = 0; j < std::pow(2,numLevels - (level+1)); j++)
+            {
+                // if we are in the middle
+                if( levelCount == levelSize/2 -1)
+                {
+                    for (int j = 0; j < std::pow(2,numLevels - 1); j++)
+                    {
+                        std::cout << "\t";
+                    }
+                    break;
+                }
+                else
+                {
+                    std::cout << "\t";
+                }
+            }
+        }
+        levelCount++;
+        if (levelCount == levelSize)
+        {
+            std::cout << std::endl;
+            level++;
+            levelSize = std::pow(2, level);
+            levelCount = 0;
+        }
     }
+    std::cout << std::endl;
+
     std::cout << "\nHash Table: " << std::endl;
 
     int mapping_filled = 0;
@@ -40,7 +87,7 @@ void heap::debugStuff()
     }
 
     // be a crazy person and delete everything, saving it in nodes
-    std::vector<node> nodes;
+/*     std::vector<node> nodes;
     while(m_filled > 0)
     {
         nodes.push_back(data[1]);
@@ -57,8 +104,22 @@ void heap::debugStuff()
             std::cout << "ERROR: " << nodes[i+1].key << " < " << nodes[i].key << std::endl;
             throw "bad min";
         }
-    }
+    } */
 
+    // make sure the heap is in order of min to max by checking that the key of the parent is less than the key of the child
+    for (int i = 1; i <= m_filled; i++)
+    {
+        if (i*2 <= m_filled && data[i].key > data[i*2].key)
+        {
+            std::cout << "ERROR: " << data[i].key << " > " << data[i*2].key << std::endl;
+            throw "bad min";
+        }
+        if (i*2+1 <= m_filled && data[i].key > data[i*2+1].key)
+        {
+            std::cout << "ERROR: " << data[i].key << " > " << data[i*2+1].key << std::endl;
+            throw "bad min";
+        }
+    }
 }
 
 // leave plenty of room in the hash table to avoid rehashing
@@ -245,6 +306,7 @@ int heap::remove(const std::string &id, int *pKey, void *ppData)
     mapping.remove(id);
 
     // percolate down
+    percolateUp(position);
     percolateDown(position);
 
     return SUCCESS;
