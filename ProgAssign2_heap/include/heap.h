@@ -47,8 +47,9 @@ public:
     // The constructor
     heap(int capacity);
 
-    //TODO: REMOVE THIS, FOR DEBUGGING ONLY
+    //TODO: REMOVE THESE, FOR DEBUGGING ONLY
     void debugStuff();
+    void printHeap();
 
 
     // insert - Inserts a new node into the binary heap

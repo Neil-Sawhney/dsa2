@@ -4,11 +4,8 @@
 #include <algorithm> //TODO: remove this
 #include <cmath> //TODO: remove this
 
-//TODO: REMOVE THIS, FOR DEBUGGING ONLY
-void heap::debugStuff()
+void heap::printHeap()
 {
-    std::cout << "Heap: " << std::endl;
-
     //print the heap so that it looks like a binary tree
     int level = 0;
     int levelSize = 1;
@@ -63,11 +60,21 @@ void heap::debugStuff()
     }
     std::cout << std::endl;
 
+}
+
+//TODO: COMMENT THIS OUT, FOR DEBUGGING ONLY
+void heap::debugStuff()
+{
+    std::cout << "Heap: " << std::endl;
+    printHeap();
+
+
     std::cout << "\nHash Table: " << std::endl;
 
     int mapping_filled = 0;
 
     // loops through the hash table
+    // make sure nothing in the hash table is pointing to something that isn't in the heap
     for (int i = -10; i <= 10; i++)
     {
         std::string id = "id" + std::to_string(i);
@@ -79,6 +86,15 @@ void heap::debugStuff()
 
             mapping_filled++;
            }
+
+        node *node_ptr = static_cast<node *>(mapping.getPointer(id));
+        int position = getPos(node_ptr);
+
+        if(position > m_filled)
+        {
+            throw "THIS IS BREAKING HERE";
+        }
+        
     }
 
     if(mapping_filled != m_filled)
@@ -120,6 +136,8 @@ void heap::debugStuff()
             throw "bad min";
         }
     }
+
+
 }
 
 // leave plenty of room in the hash table to avoid rehashing
@@ -269,7 +287,9 @@ int heap::deleteMin(std::string *pId, int *pKey, void *ppData)
     node temp = data[1];
     data[1] = data[m_filled];
 
-    //FIXME: remove the last node from the hash table
+    //fix the hash table
+    mapping.setPointer(data[1].id, &data[1]);
+
     m_filled--;
     mapping.remove(temp.id);
 
@@ -288,7 +308,7 @@ int heap::deleteMin(std::string *pId, int *pKey, void *ppData)
 
 int heap::remove(const std::string &id, int *pKey, void *ppData)
 {
-    //FIXME: NOT REMOVING PROPERLY AT DEBUG 951
+    //FIXME: NOT REMOVING PROPERLY AT DEBUG 993 b/c the node in the hash table is pointing to the wrong node
     if (!mapping.contains(id))
         return ID_DOESNT_EXIST;
 
@@ -302,10 +322,12 @@ int heap::remove(const std::string &id, int *pKey, void *ppData)
 
     // bring the last node into position
     data[position] = data[m_filled]; // remove the last node from the hash table
+    // fix the hash table
+    mapping.setPointer(data[position].id, &data[position]);
     m_filled--;
     mapping.remove(id);
 
-    // percolate down
+    // percolate up and down
     percolateUp(position);
     percolateDown(position);
 
