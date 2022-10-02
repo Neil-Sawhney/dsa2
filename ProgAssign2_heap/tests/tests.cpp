@@ -123,6 +123,7 @@ void test3()
             std::cout << "\nreturn: " << retVal << "\n" << std::endl;
             break;
         case 1:
+            //TODO: this is litterally doing nothing so make id independent of key
             retVal = myHeap.setKey(id, key);
             std::cout << "\nsetKey:" << std::endl;
             std::cout << id << ": " << key;
@@ -141,6 +142,7 @@ void test3()
             std::cout << "\nreturn: " << retVal << "\n" << std::endl;
             break;
         }
+        myHeap.debugStuff();
         std::cout << "debug: " << debug++ << std::endl;
 
         std::cout << "---------------------\n\n" << std::endl;

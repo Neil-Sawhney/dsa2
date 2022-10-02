@@ -1,5 +1,6 @@
 #include <heap.h>
 #include <iostream>
+#include <vector> //TODO: remove this
 
 //TODO: REMOVE THIS, FOR DEBUGGING ONLY
 void heap::debugStuff()
@@ -38,8 +39,26 @@ void heap::debugStuff()
         throw "mapping_filled != m_filled";
     }
 
+    // be a crazy person and delete everything, saving it in nodes
+    std::vector<node> nodes;
+    while(m_filled > 0)
+    {
+        nodes.push_back(data[1]);
+        deleteMin();
+    }
+    // then put it all back in
+    std::cout << "\nnodes: "  << std::endl;
+    for (int i = 0; i < nodes.size(); i++)
+    {
+        insert(nodes[i].id, nodes[i].key, nodes[i].pData);
+        std::cout << nodes[i].id << ": " << nodes[i].key << std::endl;
+        if (i != nodes.size()-1 && nodes[i+1].key < nodes[i].key)
+        {
+            std::cout << "ERROR: " << nodes[i+1].key << " < " << nodes[i].key << std::endl;
+            throw "bad min";
+        }
+    }
 
-    std::cout << "---------------------" << std::endl;
 }
 
 // leave plenty of room in the hash table to avoid rehashing
@@ -53,6 +72,7 @@ heap::heap(int capacity) : mapping(2*capacity)
 }
 
 // TODO: use holes instead of recursing
+//TODO: Make sure for 2 vals of the same key, the one that was inserted first is the one that is deleted first
 void heap::percolateUp(int posCur)
 {
     // If we are at the root, we are done.
@@ -83,6 +103,7 @@ void heap::percolateUp(int posCur)
 }
 
 // TODO: use holes instead of recursing
+//TODO: Make sure for 2 vals of the same key, the one that was inserted first is the one that is deleted first
 void heap::percolateDown(int posCur)
 {
     // if we are at a leaf, we are done
@@ -135,7 +156,6 @@ int heap::getPos(node *pn)
 
 int heap::insert(const std::string &id, int key, void *pv)
 {
-    debugStuff(); //TODO: REMOVE THIS, FOR DEBUGGING ONLY
     if (m_filled == m_capacity)
         return HEAP_FULL;
 
@@ -161,7 +181,6 @@ int heap::insert(const std::string &id, int key, void *pv)
 
 int heap::setKey(const std::string &id, int key)
 {
-    debugStuff(); //TODO: REMOVE THIS, FOR DEBUGGING ONLY
     if (!mapping.contains(id)){
         return ID_DOESNT_EXIST;
     }
@@ -182,8 +201,6 @@ int heap::setKey(const std::string &id, int key)
 
 int heap::deleteMin(std::string *pId, int *pKey, void *ppData)
 {
-    debugStuff(); //TODO: REMOVE THIS, FOR DEBUGGING ONLY
-
     if (m_filled == 0)
         return HEAP_EMPTY;
 
@@ -195,10 +212,12 @@ int heap::deleteMin(std::string *pId, int *pKey, void *ppData)
     m_filled--;
     mapping.remove(temp.id);
 
-    *pId = temp.id;
-    *pKey = temp.key;
-    ppData = temp.pData;
-
+    if (pId != nullptr)
+        *pId = temp.id;
+    if (pKey != nullptr)
+        *pKey = temp.key;
+    if (ppData != nullptr)
+        *(static_cast<void **>(ppData)) = temp.pData;
 
     // percolate down
     percolateDown(1);
@@ -209,7 +228,6 @@ int heap::deleteMin(std::string *pId, int *pKey, void *ppData)
 int heap::remove(const std::string &id, int *pKey, void *ppData)
 {
     //FIXME: NOT REMOVING PROPERLY AT DEBUG 951
-    debugStuff(); //TODO: REMOVE THIS, FOR DEBUGGING ONLY
     if (!mapping.contains(id))
         return ID_DOESNT_EXIST;
 
