@@ -88,11 +88,14 @@ void heap::debugStuff()
            }
 
         node *node_ptr = static_cast<node *>(mapping.getPointer(id));
-        int position = getPos(node_ptr);
-
-        if(position > m_filled)
+        if (node_ptr != nullptr)
         {
-            throw "THIS IS BREAKING HERE";
+            int position = getPos(node_ptr);
+
+            if(position > m_filled)
+            {
+                throw "THIS IS BREAKING HERE";
+            }
         }
         
     }

@@ -34,8 +34,10 @@ void getInteger(string message, int &ref)
   }
 }
 
+#include "../tests/tests.cpp" //TODO: remove this
 int main()
 {
+  test3(); //TODO: remove this
   int capacity = 0;
   int option;
   string stringTmp;

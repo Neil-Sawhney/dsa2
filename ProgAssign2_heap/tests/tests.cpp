@@ -112,7 +112,8 @@ void test3()
 
         int num = rand() % 4;
         int key = rand() % 20 - 10;
-        std::string id = "id" + std::to_string(key);
+        int idNum = rand() % 20 - 10;
+        std::string id = "id" + std::to_string(idNum);
 
         switch (num)
         {
