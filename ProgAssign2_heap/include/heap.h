@@ -47,6 +47,10 @@ public:
     // The constructor
     heap(int capacity);
 
+    //TODO: REMOVE THIS, FOR DEBUGGING ONLY
+    void debugStuff();
+
+
     // insert - Inserts a new node into the binary heap
     //
     // Inserts a node with the specified id string, key,

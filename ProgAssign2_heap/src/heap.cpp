@@ -1,6 +1,47 @@
 #include <heap.h>
 #include <iostream>
 
+//TODO: REMOVE THIS, FOR DEBUGGING ONLY
+void heap::debugStuff()
+{
+    std::cout << "Heap: " << std::endl;
+    //loop through the heap
+    for (int i = 1; i <= m_filled; i++)
+    {
+        std::cout << data[i].id << ": " << data[i].key << std::endl;
+
+        if(!mapping.contains(data[i].id))
+        {
+            throw "THIS IS BREAKING HERE";
+        }
+    }
+    std::cout << "\nHash Table: " << std::endl;
+
+    int mapping_filled = 0;
+
+    // loops through the hash table
+    for (int i = -10; i <= 10; i++)
+    {
+        std::string id = "id" + std::to_string(i);
+        if (mapping.contains(id)) 
+        {
+            int key = static_cast<node*>(mapping.getPointer(id))->key;
+
+            std::cout << "id" << i << ": " << key << std::endl;
+
+            mapping_filled++;
+           }
+    }
+
+    if(mapping_filled != m_filled)
+    {
+        throw "mapping_filled != m_filled";
+    }
+
+
+    std::cout << "---------------------" << std::endl;
+}
+
 // leave plenty of room in the hash table to avoid rehashing
 heap::heap(int capacity) : mapping(2*capacity)
 {
@@ -94,6 +135,7 @@ int heap::getPos(node *pn)
 
 int heap::insert(const std::string &id, int key, void *pv)
 {
+    debugStuff(); //TODO: REMOVE THIS, FOR DEBUGGING ONLY
     if (m_filled == m_capacity)
         return HEAP_FULL;
 
@@ -119,6 +161,7 @@ int heap::insert(const std::string &id, int key, void *pv)
 
 int heap::setKey(const std::string &id, int key)
 {
+    debugStuff(); //TODO: REMOVE THIS, FOR DEBUGGING ONLY
     if (!mapping.contains(id)){
         return ID_DOESNT_EXIST;
     }
@@ -136,24 +179,26 @@ int heap::setKey(const std::string &id, int key)
     return SUCCESS;
 }
 
+
 int heap::deleteMin(std::string *pId, int *pKey, void *ppData)
 {
+    debugStuff(); //TODO: REMOVE THIS, FOR DEBUGGING ONLY
+
     if (m_filled == 0)
         return HEAP_EMPTY;
 
-    //TODO: okay dont actually swap haha just place the last one in the first one
-
-    // swap the root with the last node
+    // place the last node first
     node temp = data[1];
     data[1] = data[m_filled];
-    data[m_filled] = temp;
-    m_filled--;
+
     //FIXME: remove the last node from the hash table
+    m_filled--;
     mapping.remove(temp.id);
 
     *pId = temp.id;
     *pKey = temp.key;
     ppData = temp.pData;
+
 
     // percolate down
     percolateDown(1);
@@ -163,25 +208,26 @@ int heap::deleteMin(std::string *pId, int *pKey, void *ppData)
 
 int heap::remove(const std::string &id, int *pKey, void *ppData)
 {
+    //FIXME: NOT REMOVING PROPERLY AT DEBUG 951
+    debugStuff(); //TODO: REMOVE THIS, FOR DEBUGGING ONLY
     if (!mapping.contains(id))
         return ID_DOESNT_EXIST;
 
     // find the node pointer in the hash table
     node *node_ptr = static_cast<node *>(mapping.getPointer(id));
 
-    // swap the node with the last node
-    node temp = data[getPos(node_ptr)];
-    data[getPos(node_ptr)] = data[m_filled];
-    data[m_filled--] = temp;
+    int position = getPos(node_ptr);
 
-    // remove the last node from the hash table
-    *pKey = data[m_filled + 1].key;
-    ppData = data[m_filled + 1].pData;
-    //FIXME: remove the last node from the hash table
+    *pKey = data[position].key;
+    ppData = data[position].pData;
+
+    // bring the last node into position
+    data[position] = data[m_filled]; // remove the last node from the hash table
+    m_filled--;
     mapping.remove(id);
 
     // percolate down
-    percolateDown(getPos(node_ptr));
+    percolateDown(position);
 
     return SUCCESS;
 }

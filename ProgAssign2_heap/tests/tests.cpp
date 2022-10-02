@@ -1,39 +1,16 @@
 #include <string>
 #include <heap.h>
 #include <iostream>
+#include <queue>
 
-int debug_identifier = 0;
-void randomThing(heap &myHeap)
-{
-    int num = rand() % 4;
-    int key = rand() % 20 - 10;
-    std::string id = "id" + std::to_string(key);
-
-    switch(num)
-    {
-        case 0:
-            std::cout << "\ninsert:\nkey: " << key << "\nid: " << id << "\nreturn: " << myHeap.insert(id, key) << "\n" << std::endl;;
-            break;
-        case 1:
-            std::cout << "\nsetKey:\nkey: " << key << "\nid: " << id << "\nreturn: " << myHeap.setKey(id, key) << "\n" << std::endl;;
-            break;
-        case 2:
-            std::cout << "\nremove:\nkey: " << key << "\nid: " << id << "\nreturn: " << myHeap.remove(id, &key) << "\n" << std::endl;;
-            break;
-        case 3:
-            std::cout << "\ndeleteMin:\nkey: " << key << "\nid: " << id << "\nreturn: " << myHeap.deleteMin(&id, &key) << "\n" << std::endl;;
-            break;
-    }
-    std::cout << debug_identifier++ << std::endl;
-    
-}
+heap myHeap(100);
+std::string id = "";
+int key = 0;
+int retVal = 0;
+int debug = 0;
 
 void test1()
 {
-    heap myHeap(100);
-    std::string id = "";
-    int key = 0;
-    int retVal = 0;
 
     // Insert keys from Insertion Example in the powerpoint
     myHeap.insert("A", 13);
@@ -62,6 +39,13 @@ void test1()
         last = key;
     }
 
+    std::cout << "success" << std::endl;
+
+
+}
+
+void test2()
+{
     // Sables expected output
     if (myHeap.insert("string one", 35) != 0)
         throw "test failed";
@@ -114,12 +98,51 @@ void test1()
     if (myHeap.deleteMin(&id, &key) != 1)
         throw "test failed"; 
 
-    std::cout << "success 1" << std::endl;
+
+}
+
+void test3()
+{
+
 
     // perform random tests until something fails
     while (1)
     {
-        randomThing(myHeap);
+        std::cout << "\n\n---------------------" << std::endl;
+
+        int num = rand() % 4;
+        int key = rand() % 20 - 10;
+        std::string id = "id" + std::to_string(key);
+
+        switch (num)
+        {
+        case 0:
+            retVal = myHeap.insert(id, key);
+            std::cout << "\ninsert:" << std::endl;
+            std::cout << id << ": " << key;
+            std::cout << "\nreturn: " << retVal << "\n" << std::endl;
+            break;
+        case 1:
+            retVal = myHeap.setKey(id, key);
+            std::cout << "\nsetKey:" << std::endl;
+            std::cout << id << ": " << key;
+            std::cout << "\nreturn: " << retVal << "\n" << std::endl;
+            break;
+        case 2:
+            retVal = myHeap.remove(id, &key);
+            std::cout << "\nremove:" << std::endl;
+            std::cout << id << ": " << key;
+            std::cout << "\nreturn: " << retVal << "\n" << std::endl;
+            break;
+        case 3:
+            retVal = myHeap.deleteMin(&id, &key);
+            std::cout << "\ndeleteMin:" << std::endl;
+            std::cout << id << ": " << key;
+            std::cout << "\nreturn: " << retVal << "\n" << std::endl;
+            break;
+        }
+        std::cout << "debug: " << debug++ << std::endl;
+
+        std::cout << "---------------------\n\n" << std::endl;
     }
-    
 }

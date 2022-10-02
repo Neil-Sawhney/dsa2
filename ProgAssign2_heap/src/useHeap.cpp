@@ -37,7 +37,7 @@ void getInteger(string message, int &ref)
 #include "../tests/tests.cpp" //TODO: REMOVE THIS LINE
 int main()
 {
-  test1(); //TODO: REMOVE THIS LINE
+  test3(); //TODO: REMOVE THIS LINE
   int capacity = 0;
   int option;
   string stringTmp;
