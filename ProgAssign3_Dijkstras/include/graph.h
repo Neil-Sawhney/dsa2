@@ -51,4 +51,7 @@ class graph
     // returns a pointer to the vertex node with the specified id
   // If the vertex DNE return nullptr
     vertex_node* getVertexPointer(const std::string &id);
+
+    // TODO: these are tests, comment them out later
+    bool test1();
 };
