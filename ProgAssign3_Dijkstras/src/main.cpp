@@ -5,5 +5,5 @@
 #include "../tests/tests.cpp" // TODO: remove this
 int main()
 {
-    performAllTests(); // TODO: remove this line
+    performTests(); // TODO: remove this line
 }

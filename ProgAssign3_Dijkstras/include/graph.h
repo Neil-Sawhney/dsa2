@@ -34,8 +34,8 @@ class graph
             vertex_node(const std::string &id); // The constructor
         };
 
-        // a vector of all the vertices in the graph
-        std::vector<vertex_node> vertices;
+        // a list of all the vertices in the graph
+        std::list<vertex_node> vertices;
         hashTable vertex_table; // A hash table that maps vertex ids to vertex nodes
 
     public:
@@ -53,5 +53,5 @@ class graph
     vertex_node* getVertexPointer(const std::string &id);
 
     // TODO: these are tests, comment them out later
-    bool test1();
+    bool tests();
 };

@@ -13,50 +13,35 @@ graph::vertex_node* graph::getVertexPointer(const std::string &id)
 
 void graph::addEdge(const std::string &src, const std::string &dest, int weight)
 {
-   vertex_node* vDest = getVertexPointer(dest);
-   vertex_node* vSrc = getVertexPointer(src);
+   vertex_node* vDest_ptr = getVertexPointer(dest);
+   vertex_node* vSrc_ptr = getVertexPointer(src);
 
-   if(vSrc == nullptr)
+   if(vSrc_ptr == nullptr)
    {
-        // create a new vertex
-        vertex_node v(src);
-
-        // add the vertex to the vertices vector
-        vertices.push_back(v);
+        // add a new vertex node to the vertices list
+        vertices.push_back(vertex_node(src));
 
         // save the location of the vertex
-        vertex_node* vptr = &vertices.back();
+        vSrc_ptr = &vertices.back();
 
-        // add the vertex location to the hash table
-        vertex_table.insert(src, vptr);
-
-        // set vSrc to the new vertex
-        vSrc = vptr;
+        // add the vertex to the hash table
+        vertex_table.insert(src, vSrc_ptr);
    }
 
-   if (vDest == nullptr)
+   if (vDest_ptr == nullptr)
     {
-        // create a new vertex
-        vertex_node v(dest);
-
-        // add the vertex to the vertices vector
-        vertices.push_back(v);
+        // add a new vertex node to the vertices list
+        vertices.push_back(vertex_node(dest));
 
         // save the location of the vertex
-        vertex_node* vptr = &vertices.back();
+        vDest_ptr = &vertices.back();
 
-        // add the vertex location to the hash table
-        vertex_table.insert(dest, vptr);
-
-        // set vDest to the new vertex
-        vDest = vptr;
+        // add the vertex to the hash table
+        vertex_table.insert(dest, vDest_ptr);
     }
 
-   // create a new edge
-   vertex_node::edge_node e(vDest, weight);
-
    // add the edge to the adjacency list of the source vertex
-    vSrc->adj.push_back(e);
+    vSrc_ptr->adj.push_back(vertex_node::edge_node(vDest_ptr, weight));
 }
 
 //define vertex_node constructor
