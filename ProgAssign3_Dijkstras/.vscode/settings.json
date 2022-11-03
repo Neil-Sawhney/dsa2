@@ -21,6 +21,7 @@
         "iostream": "cpp",
         "array": "cpp",
         "list": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "stdexcept": "cpp"
     }
 }

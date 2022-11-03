@@ -46,11 +46,12 @@ void performTests(){
             throw std::runtime_error("Line: " + std::to_string(__LINE__));
         if(v1.getShortestPath("v5") != std::vector<std::string>({"v1", "v4", "v5"}))    
             throw std::runtime_error("Line: " + std::to_string(__LINE__));
-        if(v1.getShortestPath("v6") != std::vector<std::string>({"v1", "v4", "v6"}))
+        if(v1.getShortestPath("v6") != std::vector<std::string>({"v1", "v4", "v7", "v6"}))
             throw std::runtime_error("Line: " + std::to_string(__LINE__));
         if(v1.getShortestPath("v7") != std::vector<std::string>({"v1", "v4", "v7"}))
             throw std::runtime_error("Line: " + std::to_string(__LINE__));
         
+        std::cout << "All tests passed!" << std::endl;
         // dijkstras from v5
         //graph::dijkstra v5(g, "v5");
 }
