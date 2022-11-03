@@ -52,7 +52,7 @@ graph::dijkstra::dijkstra(graph &graph, std::string srcId) : destinationTable(2*
             destination_vertex* w = getDestinationPointer(e.dest->id);
 
             // if the distance to v + the weight of e is less than the distance to w
-            if (v->distance + e.weight < w->distance && !w->known)
+            if (v->distance + e.weight < w->distance && !w->known && v->distance != INT_MAX)
             {
                 w->distance = v->distance + e.weight;
                 w->prevVertex = v->vertex;

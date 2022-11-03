@@ -19,6 +19,13 @@ int main()
     graph g;
     constructGraph(g, inputFile);
 
+    // check if the start vertex is valid
+    while(!g.containsVertex(startVertex))
+    {
+        std::cout << "Invalid start vertex. Enter a valid start vertex: ";
+        std::cin >> startVertex;
+    }
+
     // start the clock
     auto start = std::chrono::high_resolution_clock::now();
 
@@ -81,7 +88,14 @@ void exportResults(graph::dijkstra dijk, std::string outputFile)
     for (std::string vertex : ids)
     {
         file << vertex << ": ";
-        file << dijk.getDistance(vertex) << " ";
+        int d = dijk.getDistance(vertex);
+        if (d == INT_MAX)
+        {
+            file << "NO PATH" << std::endl;
+            continue;
+        }
+
+        file << d << " ";
 
         file << "[";
         // get the shortest path
