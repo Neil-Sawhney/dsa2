@@ -74,6 +74,10 @@ class graph
         // returns the distance from the source to the destination
         int getDistance(const std::string &destId);
 
+        //TODO: its stupid that i have to redefine this 
+        std::vector<std::string> getVertexIds(); // Returns a vector containing all vertex ids
+
+
         destination_vertex* getDestinationPointer(const std::string &id); // returns a pointer to the destination vertex node with the specified id
 
         dijkstra(graph &graph, std::string srcId); // the constructor, dijkstras algorithm is run here

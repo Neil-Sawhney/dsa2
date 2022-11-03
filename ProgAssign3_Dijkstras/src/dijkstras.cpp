@@ -99,3 +99,15 @@ std::vector<std::string> graph::dijkstra::getShortestPath(const std::string &des
 
     return path;
 }
+
+std::vector<std::string> graph::dijkstra::getVertexIds()
+{
+    std::vector<std::string> ids;
+
+    for (destination_vertex v : destinations)
+    {
+        ids.push_back(v.vertex->id);
+    }
+
+    return ids;
+}
