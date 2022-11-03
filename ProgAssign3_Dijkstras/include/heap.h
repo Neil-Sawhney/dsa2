@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
-#include <hash.h>
+#include "./hash.h"
 
 class heap
 {

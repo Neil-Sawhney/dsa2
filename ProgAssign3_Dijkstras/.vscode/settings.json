@@ -20,6 +20,7 @@
         "cstdio": "cpp",
         "iostream": "cpp",
         "array": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "valarray": "cpp"
     }
 }

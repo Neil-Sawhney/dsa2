@@ -3,6 +3,7 @@
 #include <string>
 #include <list>
 #include <vector>
+#include <bits/stdc++.h>
 
 class graph
 {
@@ -17,7 +18,7 @@ class graph
             // weight - the weight of the edge
             struct edge_node
             {
-                vertex_node* dest; // The destination vertex
+                vertex_node* dest{nullptr}; // The destination vertex
                 int weight; // The weight of the edge
                 
                 edge_node(vertex_node* &dest, int weight); // The constructor
@@ -33,11 +34,13 @@ class graph
 
         };
 
-    // a list of all the vertices in the graph
-    std::list<vertex_node> vertices;
     hashTable vertexTable; // A hash table that maps vertex ids to vertex nodes
+    std::list<vertex_node> vertices; // a list of all the vertices in the graph
 
     public:
+
+    std::vector<std::string> getVertexIds(); // Returns a vector containing all vertex ids
+
     // adds an edge to the graph
     void addEdge(const std::string &src, const std::string &dest, int weight);
 
@@ -48,31 +51,32 @@ class graph
     // If the vertex DNE return nullptr
     vertex_node* getVertexPointer(const std::string &id);
 
-    private:
+    //TODO: whenever we construct a new dijkstra_data, make sure the source exists in the graph
     // stores all the dijkstra data for a source vertex
-    struct dijkstra_data
+    struct dijkstra
     {
-        vertex_node* source; // keeps track of the source vertex
-
         struct destination_vertex
         {
-            bool known; // true if the shortest path to this vertex is known
-            int distance; // the distance from the source to this vertex
-            vertex_node* prevVertex; // the previous vertex on the shortest path
-            vertex_node* vertex; // the vertex this node represents
+            bool known{false}; // true if the shortest path to this vertex is known
+            int distance{INT_MAX}; // the distance from the source to this vertex
+            vertex_node* prevVertex{nullptr}; // the previous vertex on the shortest path
+            vertex_node* vertex{nullptr}; // the vertex this node represents
+
+            destination_vertex(vertex_node* vertex); // The constructor
         };
 
         std::list<destination_vertex> destinations; // a list of all the destination vertex nodes
         hashTable destinationTable; // a hash table that maps vertex ids to destination vertex nodes
 
         // returns the shortest path from the source to the destination as a vector of strings
-        std::string getShortestPath(const std::string &dest);
+        std::vector<std::string> getShortestPath(const std::string &destId);
 
         // returns the distance from the source to the destination
-        int getDistance(const std::string &dest);
+        int getDistance(const std::string &destId);
 
+        destination_vertex* getDestinationPointer(const std::string &id); // returns a pointer to the destination vertex node with the specified id
+
+        dijkstra(graph &graph, std::string srcId); // the constructor, dijkstras algorithm is run here
     };
 
-    // TODO: these are tests, comment them out later
-    bool tests();
 };

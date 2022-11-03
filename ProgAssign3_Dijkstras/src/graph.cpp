@@ -1,6 +1,17 @@
 #include <string>
+#include <vector>
 #include <list>
 #include "../include/graph.h"
+
+std::vector<std::string> graph::getVertexIds()
+{
+    std::vector<std::string> ids;
+    for (auto &vertex : vertices)
+    {
+        ids.push_back(vertex.id);
+    }
+    return ids;
+}
 
 bool graph::containsVertex(const std::string &id)
 {
