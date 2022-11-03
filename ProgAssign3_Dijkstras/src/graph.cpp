@@ -1,14 +1,15 @@
 #include <string>
+#include <list>
 #include "../include/graph.h"
 
 bool graph::containsVertex(const std::string &id)
 {
-    return vertex_table.contains(id);
+    return vertexTable.contains(id);
 }
 
 graph::vertex_node* graph::getVertexPointer(const std::string &id)
 {
-    return (vertex_node*)vertex_table.getPointer(id);
+    return (vertex_node*)vertexTable.getPointer(id);
 }
 
 void graph::addEdge(const std::string &src, const std::string &dest, int weight)
@@ -25,7 +26,7 @@ void graph::addEdge(const std::string &src, const std::string &dest, int weight)
         vSrc_ptr = &vertices.back();
 
         // add the vertex to the hash table
-        vertex_table.insert(src, vSrc_ptr);
+        vertexTable.insert(src, vSrc_ptr);
    }
 
    if (vDest_ptr == nullptr)
@@ -37,7 +38,7 @@ void graph::addEdge(const std::string &src, const std::string &dest, int weight)
         vDest_ptr = &vertices.back();
 
         // add the vertex to the hash table
-        vertex_table.insert(dest, vDest_ptr);
+        vertexTable.insert(dest, vDest_ptr);
     }
 
    // add the edge to the adjacency list of the source vertex
