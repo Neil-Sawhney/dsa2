@@ -51,7 +51,6 @@ class graph
     // If the vertex DNE return nullptr
     vertex_node* getVertexPointer(const std::string &id);
 
-    //TODO: whenever we construct a new dijkstra_data, make sure the source exists in the graph
     // stores all the dijkstra data for a source vertex
     struct dijkstra
     {
@@ -74,7 +73,7 @@ class graph
         // returns the distance from the source to the destination
         int getDistance(const std::string &destId);
 
-        //TODO: its stupid that i have to redefine this 
+        //TODO: it seems stupid that i have to redefine this 
         std::vector<std::string> getVertexIds(); // Returns a vector containing all vertex ids
 
 
